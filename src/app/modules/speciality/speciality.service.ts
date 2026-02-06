@@ -1,4 +1,4 @@
-import {Speciality} from "../../../generated/prisma/client";
+
 import {prisma} from "../../../lib/prisma";
 
 

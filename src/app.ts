@@ -1,5 +1,5 @@
 import express, {Application, Request, Response} from "express";
-import {prisma} from "./lib/prisma";
+import {prisma} from "./app/lib/prisma";
 import {specialityRoutes} from "./app/modules/speciality/speciality.routes";
 import {indexRoutes} from "./app/routes";
 

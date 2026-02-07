@@ -1,6 +1,6 @@
 import {NextFunction, Request, RequestHandler, Response} from "express";
 import {specialityService} from "./speciality.service";
-import {prisma} from "../../../lib/prisma";
+import {prisma} from "../../lib/prisma";
 import {catchAsync} from "../../shared/catchAsync";
 import {sendResponse} from "../../shared/sendResponse";
 

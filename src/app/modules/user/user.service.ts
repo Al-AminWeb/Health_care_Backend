@@ -2,7 +2,7 @@ import {ICreateDoctorPayload} from "./user.interface";
 import {ROLE, speciality} from "../../../generated/prisma/client";
 import {prisma} from "../../lib/prisma";
 import {auth} from "../../lib/auth";
-import * as trace_events from "node:trace_events";
+
 
 
 const createDoctor = async (payload: ICreateDoctorPayload) => {

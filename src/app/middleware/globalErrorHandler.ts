@@ -4,12 +4,13 @@ import status from "http-status";
 import z from "zod";
 import {TErrorResponse, TErrorSources} from "../interfaces/error.interfaces";
 import {handleZodError} from "../errorHelpers/handleZodError";
+import AppError from "../errorHelpers/AppError";
 
 
 export const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     if (envVars.NODE_ENV === "development") console.log("error from global error handler:", err)
 
-    const errorSource: TErrorSources[] = []
+    const errorSources: TErrorSources[] = []
     let statusCode: number = status.INTERNAL_SERVER_ERROR;
     let message: string = "Internal server error";
 
@@ -46,7 +47,8 @@ export const globalErrorHandler = (err: any, req: Request, res: Response, next: 
         success: false,
         message: message,
         errorSources,
-        error: envVars.NODE_ENV === "development" ? err : undefined
+        error: envVars.NODE_ENV === "development" ? err : undefined,
+        stack: envVars.NODE_ENV === 'development' ? stack : undefined,
     }
     res.status(statusCode).json(errorResponse)
 }

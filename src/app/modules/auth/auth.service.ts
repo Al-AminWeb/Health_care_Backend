@@ -94,9 +94,7 @@ const loginUser = async (payload: ILoginUserPayload) => {
         status: data.user.status,
         isDeleted: data.user.isDeleted,
         emailVerified: data.user.emailVerified,
-
-
-        })
+    })
     return {
         ...data,
         accessToken,

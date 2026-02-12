@@ -1,6 +1,8 @@
 import {auth} from "../../lib/auth";
 import {UserStatus} from "../../../generated/prisma/enums";
 import {prisma} from "../../lib/prisma";
+import {tokensUtils} from "../../utils/tokens";
+import {role} from "better-auth/client";
 
 interface IRegisterPatientPayload {
     name: string;
@@ -73,7 +75,33 @@ const loginUser = async (payload: ILoginUserPayload) => {
         throw new Error("User is deleted");
     }
 
-    return data;
+
+    const accessToken = tokensUtils.getAccessToken({
+        userId: data.user.id,
+        role: data.user.role,
+        name: data.user.name,
+        email: data.user.email,
+        status: data.user.status,
+        isDeleted: data.user.isDeleted,
+        emailVerified: data.user.emailVerified,
+    })
+
+    const refreshToken = tokensUtils.getRefreshToken({
+        userId: data.user.id,
+        role: data.user.role,
+        name: data.user.name,
+        email: data.user.email,
+        status: data.user.status,
+        isDeleted: data.user.isDeleted,
+        emailVerified: data.user.emailVerified,
+
+
+        })
+    return {
+        ...data,
+        accessToken,
+        refreshToken
+    };
 
 }
 

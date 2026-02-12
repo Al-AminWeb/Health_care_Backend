@@ -1,9 +1,9 @@
 import {JwtPayload, SignOptions} from "jsonwebtoken";
-import {jwt} from "zod";
+import jwt from "jsonwebtoken";
 
 
 const createToken = (payload: JwtPayload, secret: string, {expiresIn}: SignOptions) => {
-    // @ts-ignore
+
     const token = jwt.sign(payload, secret, {expiresIn});
     return token;
 
@@ -11,7 +11,7 @@ const createToken = (payload: JwtPayload, secret: string, {expiresIn}: SignOptio
 
 const verifyToken = (token: string, secret: string) => {
     try {
-        // @ts-ignore
+
         const decoded = jwt.verify(token, secret) as JwtPayload;
         return {
             success: true,

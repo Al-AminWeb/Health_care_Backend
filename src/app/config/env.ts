@@ -12,13 +12,27 @@ interface envConfig {
     REFRESH_TOKEN_SECRET: string
     ACCESS_TOKEN_EXPIRATION: string
     REFRESH_TOKEN_EXPIRATION: string
+    BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: string
+    BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: string
 
 }
 
 const loadEnvVariables = (): envConfig => {
 
 
-    const requiredEnvVariable = ['NODE_ENV', 'PORT', 'BETTER_AUTH_URL', 'BETTER_AUTH_SECRET', 'DATABASE_URL', 'ACCESS_TOKEN_SECRET', 'REFRESH_TOKEN_SECRET', 'ACCESS_TOKEN_EXPIRATION', 'REFRESH_TOKEN_EXPIRATION'];
+    const requiredEnvVariable = [
+        'NODE_ENV',
+        'PORT',
+        'BETTER_AUTH_URL',
+        'BETTER_AUTH_SECRET',
+        'DATABASE_URL',
+        'ACCESS_TOKEN_SECRET',
+        'REFRESH_TOKEN_SECRET',
+        'ACCESS_TOKEN_EXPIRATION',
+        'REFRESH_TOKEN_EXPIRATION',
+        'BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN',
+        'BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE'
+    ];
 
     requiredEnvVariable.forEach((variable) => {
         if (!process.env[variable]) {
@@ -35,6 +49,8 @@ const loadEnvVariables = (): envConfig => {
         REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET as string,
         ACCESS_TOKEN_EXPIRATION: process.env.ACCESS_TOKEN_EXPIRATION as string,
         REFRESH_TOKEN_EXPIRATION: process.env.REFRESH_TOKEN_EXPIRATION as string,
+        BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: process.env.BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN as string,
+        BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: process.env.BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE as string,
     }
 }
 

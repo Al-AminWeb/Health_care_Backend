@@ -1,23 +1,24 @@
 model Appointment {
   id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  patientId        String            @db.Uuid
-  doctorId         String            @db.Uuid
+  patientId        String
+  doctorId         String
   doctorScheduleId String            @unique @db.Uuid
   videoCallingId   String
   status           AppointmentStatus @default(SCHEDULED)
   paymentStatus    PaymentStatus     @default(UNPAID)
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
+  scheduleId       String
 
   // Relations
-  patient        Patient         @relation(fields: [patientId], references: [id])
-  doctor         Doctor          @relation(fields: [doctorId], references: [id])
+  patient        Patient         @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor         Doctor          @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   doctorSchedule DoctorSchedules @relation(fields: [doctorScheduleId], references: [id])
+  schedule       Schedule        @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
 
-  payment       Payment?
-  review        Review?
-  prescription  Prescription?
-  medicalReport MedicalReport?
+  prescription Prescription?
+  review       Review?
+  payment      Payment?
 
   @@map("appointments")
 }

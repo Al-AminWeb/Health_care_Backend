@@ -1,13 +1,11 @@
-import {ICreateDoctorPayload} from "./user.interface";
+import {ICreateAdmin, ICreateDoctorPayload} from "./user.interface";
 import {ROLE, speciality} from "../../../generated/prisma/client";
 import {prisma} from "../../lib/prisma";
 import {auth} from "../../lib/auth";
 
 
-
 const createDoctor = async (payload: ICreateDoctorPayload) => {
     const specialities: speciality[] = [];
-
     for (const specialityId of payload.specialties) {
         const speciality = await prisma.speciality.findUnique({
             where: {
@@ -19,7 +17,6 @@ const createDoctor = async (payload: ICreateDoctorPayload) => {
         }
         specialities.push(speciality)
     }
-
     const userExists = await prisma.user.findUnique({
         where:
             {
@@ -41,7 +38,6 @@ const createDoctor = async (payload: ICreateDoctorPayload) => {
     })
 
     try {
-
         const result = await prisma.$transaction(async (tx) => {
             const doctorData = await tx.doctor.create({
                 data: {
@@ -111,15 +107,47 @@ const createDoctor = async (payload: ICreateDoctorPayload) => {
             return doctor;
         })
         return result
-
     } catch (error) {
         // @ts-ignore
         console.log("transaction error", error.message);
         await prisma.user.delete({where: {id: userData.user.id}})
     }
-
 }
 
+const createAdmin = async (payload: ICreateAdmin) => {
+    const userExists = await prisma.user.findUnique({
+        where:
+            {
+                email: payload.admin.email
+            }
+    })
+    if (userExists) {
+        throw new Error("User already exists")
+    }
+
+    const adminData = await auth.api.signUpEmail({
+        body: {
+            email: payload.admin.email,
+            password: payload.password,
+            role: ROLE.ADMIN,
+            name: payload.admin.name,
+            needPasswordChange: true,
+            rememberMe: false
+
+        }
+    })
+
+    try {
+        const result = await prisma.$transaction(async (tx) => {
+            const admin = await tx.admin
+
+
+        })
+    } catch (error: any) {
+
+    }
+
+}
 
 export const userService = {
     createDoctor

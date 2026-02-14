@@ -62,7 +62,7 @@ export const checkAuth = (...authRoles: ROLE[]) => async (req: Request, res: Res
                 }
             }
 
-            const accessToken = CookieUtils.getCookie(req, 'accessToken');
+            const accessToken = cookieUtils.getCookie(req, 'accessToken');
 
             if (!accessToken) {
                 throw new AppError(status.UNAUTHORIZED, 'Unauthorized access! No access token provided.');
@@ -72,7 +72,7 @@ export const checkAuth = (...authRoles: ROLE[]) => async (req: Request, res: Res
         }
 
         //Access Token Verification
-        const accessToken = CookieUtils.getCookie(req, 'accessToken');
+        const accessToken = cookieUtils.getCookie(req, 'accessToken');
 
         if (!accessToken) {
             throw new AppError(status.UNAUTHORIZED, 'Unauthorized access! No access token provided.');
@@ -84,7 +84,7 @@ export const checkAuth = (...authRoles: ROLE[]) => async (req: Request, res: Res
             throw new AppError(status.UNAUTHORIZED, 'Unauthorized access! Invalid access token.');
         }
 
-        if (authRoles.length > 0 && !authRoles.includes(verifiedToken.data!.role as Role)) {
+        if (authRoles.length > 0 && !authRoles.includes(verifiedToken.data!.role as ROLE)) {
             throw new AppError(status.FORBIDDEN, 'Forbidden access! You do not have permission to access this resource.');
         }
 

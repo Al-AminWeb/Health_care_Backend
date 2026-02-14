@@ -1,11 +1,9 @@
-import {Router} from "express";
-import {validateRequest} from "../../middleware/validateRequest";
-import {userController} from "./user.controller";
+
 import z from "zod";
 import {Gender} from "../../../generated/prisma/enums";
 
 
-export  const createDoctorZodSchema = z.object({
+const createDoctorZodSchema = z.object({
     password: z.string("Password is required").min(6, "Password must be at least 6 characters long").max(20, "Password must be less than 20 characters long"),
     doctor: z.object({
         name: z.string("Name is required").min(2, "Name must be at least 2 characters long").max(20, "Name must be less than 20 characters long"),
@@ -23,3 +21,19 @@ export  const createDoctorZodSchema = z.object({
     }),
     specialties: z.array(z.uuid(), "specialties must be an array of uuids").min(1, "At least one specialty is required")
 })
+
+ const createAdminValidationSchema = z.object({
+    password: z.string("Password is required").min(6, "Password must be at least 6 characters long").max(20, "Password must be less than 20 characters long"),
+    admin: z.object({
+        name: z.string("Name is required").min(2, "Name must be at least 2 characters long").max(20, "Name must be less than 20 characters long"),
+        email: z.email("Invalid email address"),
+        contactNumber: z.string("Contact number is required").min(11, "Contact number must be 11 digits long").max(14, "contact number must be 14 digits long"),
+        profilePhoto: z.url("Invalid URL format").optional(),
+    })
+
+})
+
+export const userValidation = {
+    createDoctorZodSchema,
+    createAdminValidationSchema
+}

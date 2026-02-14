@@ -1,5 +1,5 @@
 import {catchAsync} from "../../shared/catchAsync";
-import {authService} from "../auth/auth.service";
+
 import {sendResponse} from "../../shared/sendResponse";
 import {Request, Response} from "express";
 import status from "http-status";
@@ -18,6 +18,8 @@ const createDoctor = catchAsync(async (req: Request, res: Response) => {
         data: result
     })
 })
+
+
 
 export const userController = {
     createDoctor

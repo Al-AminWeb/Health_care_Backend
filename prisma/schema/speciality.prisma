@@ -21,8 +21,8 @@ model DoctorSpecialty {
   doctorId     String
   specialityId String
 
-  doctor     Doctor     @relation(fields: [doctorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  speciality speciality @relation(fields: [specialityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  doctor     Doctor     @relation(fields: [doctorId], references: [id])
+  speciality speciality @relation(fields: [specialityId], references: [id])
 
   @@unique([doctorId, specialityId])
   @@index([doctorId], name: "idx_doctor_specialty_doctorId")
